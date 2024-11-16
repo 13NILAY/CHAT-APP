@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
-
+// import axios, { axiosPrivate } from '../../api/axios';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 const Register = () => {
+  const axiosPrivate=useAxiosPrivate();
+  const navigate=useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -28,8 +33,8 @@ const Register = () => {
     
     if (!formData.password) {
       newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
     }
     
     if (formData.password !== formData.confirmPassword) {
@@ -55,11 +60,34 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Handle registration logic here
-      console.log('Form submitted:', formData);
+      try{
+        // const response =await axios.post(
+        //   "http://localhost:8080/register",
+        //   JSON.stringify({ username: formData.username, password: formData.password, email:formData.email }),
+        //   // {
+        //   //   headers:{'Content-Type':'application/json'},
+        //   //   withCredentials:true,
+        //   // }
+        // ) ;
+        const response = await fetch(`http://localhost:8080/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username: formData.username, password: formData.password, email:formData.email }),
+          // {,
+        });
+        console.log(response);
+        navigate("/login");
+
+
+      }catch(err){
+        console.log(err);
+      }
+      // console.log('Form submitted:', formData);
     }
   };
 
@@ -154,12 +182,13 @@ const Register = () => {
 
           {/* Confirm Password Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor='Confirm Password'>Confirm Password</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Lock className="h-5 w-5 text-gray-400" />
               </div>
               <input
+              id='Confirm Password'
                 type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 value={formData.confirmPassword}
@@ -199,7 +228,7 @@ const Register = () => {
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{' '}
           <span className="text-blue-500 hover:text-blue-600 cursor-pointer">
-            Login here
+          <Link to="/login">Login Here</Link>
           </span>
         </p>
       </div>

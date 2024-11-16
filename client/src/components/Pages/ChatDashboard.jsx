@@ -2,11 +2,25 @@ import React,{useState} from 'react';
 import { User, Send, LogOut } from 'lucide-react';
 import Header from '../header';
 import Footer from '../footer';
-
+import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 const ChatDashboard = () => {
+    
     const onlineUsers = ['Alice Smith', 'Bob Johnson', 'Carol White'];
     const offlineUsers = ['David Lee', 'Emily Chen', 'Frank Gonzalez'];
-  
+    const {auth} =useAuth();
+
+    if (!auth.isAuthenticated) {
+        return (
+          <>
+            <h1 className="text-2xl">Please Login To view this page</h1>
+            <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+              <Link to="/login">Login</Link>
+            </button>
+          </>
+        );
+      }
+   
     return (
       <div className="h-screen flex flex-col">
         <Header />
