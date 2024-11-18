@@ -1,5 +1,4 @@
 const User=require("../model/user")
-const mongoose=require('mongoose')
 
 const getUser = async (req, res) => {
     try {
@@ -15,9 +14,11 @@ const getUser = async (req, res) => {
 };
 const getAllUser=async(req,res)=>{
     try {
-        const user=await User.find();
-        res.json(user)
+        const user=await User.find({});
+        console.log(user);
+        res.status(200).json(user);
     } catch (error) {
+      console.log(error)
         res.send("Error while fetching users")
     }
 }

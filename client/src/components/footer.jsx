@@ -4,9 +4,11 @@ import { User, Send, LogOut, Upload } from 'lucide-react';
 const Footer = () => {
     const [message, setMessage] = useState('');
     const [showImageUpload, setShowImageUpload] = useState(false);
-  
+    const socket =new WebSocket('ws://localhost:3000')
+
     const handleSendMessage = () => {
       // Implement message sending logic here
+      if(message)
       console.log('Sending message:', message);
       setMessage('');
     };

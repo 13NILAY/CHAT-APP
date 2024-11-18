@@ -1,30 +1,28 @@
-const mongoose=require('mongoose');
-const validator =require('validator');
-const Schema =mongoose.Schema
+const mongoose = require('mongoose');
 
-const messageSchema =new Schema({
-    sender:{
-        type:Schema.Types.ObjectId,
-        ref:"User",
-        required:true
-    },
-    receiver:{
-        type:Schema.Types.ObjectId,
-        ref:"User",
-        required:true
-    },
-    messageContent:{
-        type:String,
-        required:true,
-    }
-},{timestamps:true});
-
-const Message =mongoose.model('Message',messageSchema);
-
-Message.syncIndexes().then(()=>{
-    console.log("Indexes are synchronized");
-}).catch(err=>{
-    console.log("Error Synchronizing");
+const messageSchema = new mongoose.Schema({
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  recipient: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now
+  },
+  read: {
+    type: Boolean,
+    default: false
+  }
 });
 
-module.exports =Message;
+module.exports = mongoose.model('Message', messageSchema);

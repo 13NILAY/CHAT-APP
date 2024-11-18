@@ -19,8 +19,9 @@ const verifyJWT = async (req, res, next) => {
         }
 
         try {
-            console.log(decoded);
+            // console.log(decoded);
             const user = await User.findOne({ username: decoded.UserInfo.username });
+            // console.log(user);
             if (!user) {
                 return res.status(404).json({ message: 'User not found' }); // Send 404 Not Found
             }
