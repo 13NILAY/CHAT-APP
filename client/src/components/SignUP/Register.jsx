@@ -72,7 +72,7 @@ const Register = () => {
         //   //   withCredentials:true,
         //   // }
         // ) ;
-        const response = await fetch(`http://localhost:8080/register`, {
+        const response = await fetch(`https://chat-app-3x9z.onrender.com/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
