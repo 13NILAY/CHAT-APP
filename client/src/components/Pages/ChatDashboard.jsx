@@ -5,7 +5,6 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import Header from '../header';
 
 // Custom Hooks
 import useAuth from '../../hooks/useAuth';
@@ -56,7 +55,7 @@ const ChatDashboard = () => {
   useEffect(() => {
     if (!user) return;
 
-    const newSocket = io('http://localhost:8080', {
+    const newSocket = io('https://chat-app-3x9z.onrender.com', {
       withCredentials: true,
       transports: ['websocket'],
       auth: {

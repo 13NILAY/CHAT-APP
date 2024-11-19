@@ -1,4 +1,5 @@
 const allowedOrigins =[
+    "https://onechatflow.netlify.app/",
     "http://localhost:5173",
 
     "http://localhost:5174",
